@@ -1,0 +1,25 @@
+{
+  "name": "oberknecht-websocket",
+  "version": "0.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jubewe/oberknecht-websocket.git"
+  },
+  "author": "jubewe",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/jubewe/oberknecht-websocket/issues"
+  },
+  "homepage": "https://github.com/jubewe/oberknecht-websocket#readme",
+  "dependencies": {
+    "oberknecht-api": "^0.6.3",
+    "oberknecht-emitters": "^0.1.1",
+    "oberknecht-utils": "^0.2.5",
+    "ws": "^8.13.0"
+  }
+}
