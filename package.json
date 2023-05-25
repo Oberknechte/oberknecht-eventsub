@@ -1,6 +1,6 @@
 {
   "name": "oberknecht-eventsub",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jubewe/oberknecht-eventsub.git"
+    "url": "git+https://github.com/oberknechte/oberknecht-eventsub.git"
   },
   "author": "jubewe",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/jubewe/oberknecht-eventsub/issues"
+    "url": "https://github.com/oberknechte/oberknecht-eventsub/issues"
   },
-  "homepage": "https://github.com/jubewe/oberknecht-eventsub#readme",
+  "homepage": "https://github.com/oberknechte/oberknecht-eventsub#readme",
   "dependencies": {
     "oberknecht-api": "^0.6.3",
     "oberknecht-emitters": "^0.1.1",
