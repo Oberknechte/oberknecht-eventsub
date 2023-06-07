@@ -1,10 +1,11 @@
 {
   "name": "oberknecht-eventsub",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "export",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,13 @@
   },
   "homepage": "https://github.com/oberknechte/oberknecht-eventsub#readme",
   "dependencies": {
-    "oberknecht-api": "^1.0.1",
-    "oberknecht-emitters": "^0.1.1",
+    "oberknecht-api": ">=1.0.2",
+    "oberknecht-emitters": "^1.0.0",
     "oberknecht-utils": "^1.1.4",
     "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "typescript": "^5.2.0-dev.20230606"
   }
 }

@@ -1,1 +1,0 @@
-import { subscriptionType } from "../arguments/subscription.type";
