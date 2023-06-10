@@ -1,4 +1,5 @@
 import { i } from "..";
+import { closeWebsockets } from "./closeWebsockets";
 import { getSubscriptions } from "./getSubscriptions";
 import { unsubscribe } from "./unsubscribe";
 
@@ -18,6 +19,8 @@ export function unsubscribeAll(sym: string) {
                         Object.keys(i.websocketData[sym]).forEach(wsNum => {
                             i.websocketData[sym][wsNum].subscriptions = [];
                         });
+
+                        closeWebsockets(sym)
 
                         resolve();
                     });

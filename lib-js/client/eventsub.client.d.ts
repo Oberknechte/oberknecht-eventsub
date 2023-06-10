@@ -1,6 +1,10 @@
 import { oberknechtAPI } from "oberknecht-api";
+import { streamOnlineMessage } from "../parser/notifications/stream.online";
 import { oberknechtEmitter } from "oberknecht-emitters";
 import { eventsubClientOptions } from "../types/eventsub.client.options";
+import { subscriptionType } from "../types/subscription.type";
+declare const onStreamOnlineCallback: (notification: streamOnlineMessage) => void;
+declare const onErrorCallback: (e: Error) => void;
 export declare class oberknechtEventsub {
     #private;
     get symbol(): string;
@@ -13,16 +17,16 @@ export declare class oberknechtEventsub {
     OberknechtAPI: oberknechtAPI;
     constructor(options: eventsubClientOptions);
     connect(): Promise<void>;
-    on: (eventName: any, callback: any) => void;
-    once: (eventName: any, callback: any) => void;
-    closeWebsocket: (wsNum: any) => any;
+    on: (eventName: string | string[], callback: Function) => void;
+    once: (eventName: string | string[], callback: Function) => void;
+    onError: (callback: typeof onErrorCallback) => void;
+    closeWebsocket: (wsNum: number) => any;
     closeWebsockets: () => void;
-    /** @param {onStreamOnlineCallback} callback */
-    onStreamOnline(callback: any): Promise<void>;
-    subscribe(type: any, condition: any): Promise<import("oberknecht-api/lib-js/types/endpoints/eventsub").getEventsubSubscriptionsResponse>;
-    unsubscribe(id: any): Promise<void>;
+    onStreamOnline(callback: typeof onStreamOnlineCallback): Promise<void>;
+    subscribe(type: subscriptionType, condition: any): Promise<import("oberknecht-api/lib-js/types/endpoints/eventsub").getEventsubSubscriptionsResponse>;
+    unsubscribe(id: string): Promise<void>;
     unsubscribeAll(): Promise<void>;
-    getSubscriptions(cacheOnly: any, wsNum: any): Promise<import("oberknecht-api/lib-js/types/endpoints/eventsub").getEventsubSubscriptionsResponse>;
-    /** @param {Array<string> | string} broadcasters */
-    subscribeToStreamOnline(broadcasters: any): Promise<unknown>;
+    getSubscriptions(cacheOnly?: boolean, wsNum?: null): Promise<import("oberknecht-api/lib-js/types/endpoints/eventsub").getEventsubSubscriptionsResponse>;
+    subscribeToStreamOnline(broadcasters: string | string[]): Promise<unknown>;
 }
+export {};

@@ -3,36 +3,36 @@ export declare const streamOnlineCondition: {
     broadcaster_user_id: string;
 };
 export type subscriptionType = {
-    "id": string;
-    "type": string;
-    "version": string;
-    "status": string;
-    "cost": number;
-    "condition": typeof streamOnlineCondition;
-    "transport": {
-        "method": "websocket" | "webhook";
-        "session_id": string;
+    id: string;
+    type: string;
+    version: string;
+    status: string;
+    cost: number;
+    condition: typeof streamOnlineCondition;
+    transport: {
+        method: "websocket" | "webhook";
+        session_id: string;
     };
-    "created_at": string;
+    created_at: string;
 };
 export type streamOnlineEvent = {
-    "id": string;
-    "broadcaster_user_id": string;
-    "broadcaster_user_login": string;
-    "broadcaster_user_name": string;
-    "type": string;
-    "started_at": string;
+    id: string;
+    broadcaster_user_id: string;
+    broadcaster_user_login: string;
+    broadcaster_user_name: string;
+    type: string;
+    started_at: string;
 };
 export type streamOnlineResponse = {
-    "metadata": {
-        "message_id": string;
-        "message_type": "notification";
-        "message_timestamp": string;
-        "subscription_type": "stream.online";
-        "subscription_version": eventsubSubscriptionVersionType;
+    metadata: {
+        message_id: string;
+        message_type: "notification";
+        message_timestamp: string;
+        subscription_type: "stream.online";
+        subscription_version: eventsubSubscriptionVersionType;
     };
-    "payload": {
-        "subscription": subscriptionType;
-        "event": streamOnlineEvent;
+    payload: {
+        subscription: subscriptionType;
+        event: streamOnlineEvent;
     };
 };

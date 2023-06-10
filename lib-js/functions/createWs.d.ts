@@ -1,1 +1,1 @@
-export declare function createWs(sym: any): Promise<unknown>;
+export declare function createWs(sym: any): Promise<number>;

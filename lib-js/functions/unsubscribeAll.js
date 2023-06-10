@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.unsubscribeAll = void 0;
 const __1 = require("..");
+const closeWebsockets_1 = require("./closeWebsockets");
 const getSubscriptions_1 = require("./getSubscriptions");
 const unsubscribe_1 = require("./unsubscribe");
 function unsubscribeAll(sym) {
@@ -20,6 +21,7 @@ function unsubscribeAll(sym) {
                 Object.keys(__1.i.websocketData[sym]).forEach(wsNum => {
                     __1.i.websocketData[sym][wsNum].subscriptions = [];
                 });
+                (0, closeWebsockets_1.closeWebsockets)(sym);
                 resolve();
             });
         })

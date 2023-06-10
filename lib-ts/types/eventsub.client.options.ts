@@ -1,4 +1,5 @@
 export type eventsubClientOptions = {
-    token: string,
-    withStreamInformation?: boolean
+  token: string;
+  withStreamInformation?: boolean;
+  subscribeDelay?: number;
 };

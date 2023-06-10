@@ -9,4 +9,3 @@ class i {
     static eventsubClientData = {};
 }
 exports.i = i;
-;

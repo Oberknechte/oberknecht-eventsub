@@ -1,1 +1,1 @@
-export declare function getFreeWsNum(sym: string): any;
+export declare function getFreeWsNum(sym: string): number;
