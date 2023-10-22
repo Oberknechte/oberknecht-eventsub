@@ -10,6 +10,7 @@ import { unsubscribeAll } from "../functions/unsubscribeAll";
 import { eventsubClientOptions } from "../types/eventsub.client.options";
 import { subscriptionType } from "../types/subscription.type";
 import { closeWebsockets } from "../functions/closeWebsockets";
+import { messageParser } from "../parser/messageParser";
 
 const onStreamOnlineCallback = (notification: streamOnlineMessage) => {};
 const onErrorCallback = (e: Error) => {};
@@ -111,6 +112,10 @@ export class oberknechtEventsub {
   }
   async getSubscriptions(cacheOnly?: boolean, wsNum?: null) {
     return getSubscriptions(this.symbol, cacheOnly, wsNum);
+  }
+
+  async imitateMessage(message: Record<string, any>) {
+    return messageParser(this.symbol, message, "0");
   }
 
   async subscribeToStreamOnline(broadcasters: string | string[]) {

@@ -10,6 +10,7 @@ const unsubscribe_1 = require("../functions/unsubscribe");
 const getSubscriptions_1 = require("../functions/getSubscriptions");
 const unsubscribeAll_1 = require("../functions/unsubscribeAll");
 const closeWebsockets_1 = require("../functions/closeWebsockets");
+const messageParser_1 = require("../parser/messageParser");
 const onStreamOnlineCallback = (notification) => { };
 const onErrorCallback = (e) => { };
 let clientSymNum = 0;
@@ -96,6 +97,9 @@ class oberknechtEventsub {
     }
     async getSubscriptions(cacheOnly, wsNum) {
         return (0, getSubscriptions_1.getSubscriptions)(this.symbol, cacheOnly, wsNum);
+    }
+    async imitateMessage(message) {
+        return (0, messageParser_1.messageParser)(this.symbol, message, "0");
     }
     async subscribeToStreamOnline(broadcasters) {
         return new Promise((resolve, reject) => {

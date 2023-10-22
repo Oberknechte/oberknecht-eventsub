@@ -27,6 +27,7 @@ export declare class oberknechtEventsub {
     unsubscribe(id: string): Promise<void>;
     unsubscribeAll(): Promise<void>;
     getSubscriptions(cacheOnly?: boolean, wsNum?: null): Promise<import("oberknecht-api/lib-js/types/endpoints/eventsub").getEventsubSubscriptionsResponse>;
+    imitateMessage(message: Record<string, any>): Promise<void>;
     subscribeToStreamOnline(broadcasters: string | string[]): Promise<unknown>;
 }
 export {};

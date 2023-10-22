@@ -5,7 +5,7 @@ class sessionWelcomeMessage {
     metadata = {
         messageID: String(),
         messageType: "session_welcome",
-        messageTimestamp: String()
+        messageTimestamp: String(),
     };
     payload = {
         session: {
@@ -13,8 +13,8 @@ class sessionWelcomeMessage {
             status: String(),
             connectedAt: String(),
             keepaliveTimeoutSeconds: Number(),
-            reconnectUrl: String() || null
-        }
+            reconnectUrl: String() || null,
+        },
     };
     constructor(sym, wsNum, response) {
         if (!response)
@@ -22,7 +22,7 @@ class sessionWelcomeMessage {
         this.metadata = {
             messageID: response.metadata.message_id,
             messageType: response.metadata.message_type,
-            messageTimestamp: response.metadata.message_timestamp
+            messageTimestamp: response.metadata.message_timestamp,
         };
         this.payload = {
             session: {
@@ -30,11 +30,9 @@ class sessionWelcomeMessage {
                 status: response.payload.session.status,
                 connectedAt: response.payload.session.connected_at,
                 keepaliveTimeoutSeconds: response.payload.session.keepalive_timeout_seconds,
-                reconnectUrl: response.payload.session.reconnect_url
-            }
+                reconnectUrl: response.payload.session.reconnect_url,
+            },
         };
     }
-    ;
 }
 exports.sessionWelcomeMessage = sessionWelcomeMessage;
-;

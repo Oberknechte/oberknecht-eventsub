@@ -10,4 +10,3 @@ class messageTypes {
     };
 }
 exports.messageTypes = messageTypes;
-;
