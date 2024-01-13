@@ -2,7 +2,7 @@ import { eventsubSubscriptionVersionType } from "oberknecht-api/lib-js/types/end
 export declare const streamOnlineCondition: {
     broadcaster_user_id: string;
 };
-export type subscriptionType = {
+export declare type subscriptionType = {
     id: string;
     type: string;
     version: string;
@@ -15,7 +15,7 @@ export type subscriptionType = {
     };
     created_at: string;
 };
-export type streamOnlineEvent = {
+export declare type streamOnlineEvent = {
     id: string;
     broadcaster_user_id: string;
     broadcaster_user_login: string;
@@ -23,7 +23,7 @@ export type streamOnlineEvent = {
     type: string;
     started_at: string;
 };
-export type streamOnlineResponse = {
+export declare type streamOnlineResponse = {
     metadata: {
         message_id: string;
         message_type: "notification";

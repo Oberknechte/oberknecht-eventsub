@@ -1,2 +1,2 @@
 import { messageTypes } from "./eventsub.subscriptiontypes";
-export type subscriptionType = typeof messageTypes[number][1];
+export declare type subscriptionType = typeof messageTypes[number][1];

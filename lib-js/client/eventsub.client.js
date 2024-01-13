@@ -62,6 +62,7 @@ class oberknechtEventsub {
         __1.i.OberknechtEmitter[this.symbol] = this.OberknechtEmitter;
         this.OberknechtAPI = __1.i.OberknechtAPI[this.symbol] = new oberknecht_api_1.oberknechtAPI({
             token: _options.token,
+            ...(_options.oberknechtAPIOptions ?? {}),
         });
     }
     async connect() {
@@ -101,31 +102,39 @@ class oberknechtEventsub {
     async imitateMessage(message) {
         return (0, messageParser_1.messageParser)(this.symbol, message, "0");
     }
-    async subscribeToStreamOnline(broadcasters) {
-        return new Promise((resolve, reject) => {
-            let broadcasters_ = (0, oberknecht_utils_1.convertToArray)(broadcasters);
-            this.OberknechtAPI.getUsers(broadcasters_)
-                .then((broadcasters) => {
-                Promise.all(Object.keys(broadcasters.ids).map((broadcasterID) => {
-                    return new Promise((resolve2, reject2) => {
-                        this.subscribe("stream.online", {
-                            broadcaster_user_id: broadcasterID,
-                        })
-                            .then((subscription) => {
-                            return resolve2({
-                                ...broadcasters.details[broadcasterID],
-                                subscription: subscription?.data?.[0],
-                            });
-                        })
-                            .catch(reject2);
-                    });
-                }))
-                    .then(resolve)
-                    .catch(reject);
-            })
-                .catch((e) => {
-                return reject([Error("Could not get broadcasters", { cause: e })]);
-            });
+    async subscribeToStreamOnline(broadcasterLogins, broadcasterIDs, requestAll) {
+        return new Promise(async (resolve, reject) => {
+            let broadcasterLogins_ = (0, oberknecht_utils_1.convertToArray)(broadcasterLogins);
+            let broadcasterIDs_ = (0, oberknecht_utils_1.convertToArray)(broadcasterIDs);
+            let broadcasterDatas = {};
+            if (broadcasterLogins_.length > 0 || requestAll)
+                await this.OberknechtAPI.getUsers(broadcasterLogins_, requestAll ? broadcasterIDs_ : [])
+                    .then((broadcasters) => {
+                    broadcasterIDs_ = [
+                        ...broadcasterIDs_,
+                        ...Object.keys(broadcasters.ids),
+                    ];
+                    broadcasterDatas = broadcasters.details;
+                })
+                    .catch((e) => {
+                    return reject([Error("Could not get broadcasters", { cause: e })]);
+                });
+            Promise.all(broadcasterIDs_.map((broadcasterID) => {
+                return new Promise((resolve2, reject2) => {
+                    this.subscribe("stream.online", {
+                        broadcaster_user_id: broadcasterID,
+                    })
+                        .then((subscription) => {
+                        return resolve2({
+                            ...(broadcasterDatas[broadcasterID] ?? {}),
+                            subscription: subscription?.data?.[0],
+                        });
+                    })
+                        .catch(reject2);
+                });
+            }))
+                .then(resolve)
+                .catch(reject);
         });
     }
 }
