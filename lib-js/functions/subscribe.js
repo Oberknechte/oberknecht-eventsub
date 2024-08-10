@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.subscribe = void 0;
+exports.subscribe = subscribe;
 const __1 = require("..");
 const createWs_1 = require("./createWs");
 const getFreeWsNum_1 = require("./getFreeWsNum");
@@ -8,7 +8,7 @@ const oberknecht_utils_1 = require("oberknecht-utils");
 let creatingWsPromise = {};
 let creatingWS = {};
 let inQueue = {};
-async function subscribe(sym, type, condition, transport) {
+async function subscribe(sym, type, condition, transport, version) {
     return new Promise(async (resolve, reject) => {
         if (!inQueue[sym])
             inQueue[sym] = 0;
@@ -42,7 +42,7 @@ async function subscribe(sym, type, condition, transport) {
             session_id: __1.i.websocketData?.[sym]?.[wsNum]?.sessionData?.id,
         };
         await __1.i.OberknechtAPI[sym]
-            .addEventsubSubscription(type, undefined, condition, transport_)
+            .addEventsubSubscription(type, version, condition, transport_)
             .then((subscription) => {
             __1.i.eventsubClientData[sym].totalSubscriptions = subscription.total;
             __1.i.eventsubClientData[sym].totalCost = subscription.total_cost;
@@ -62,4 +62,3 @@ async function subscribe(sym, type, condition, transport) {
         });
     });
 }
-exports.subscribe = subscribe;

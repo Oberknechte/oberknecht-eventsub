@@ -3,7 +3,9 @@ import { streamOnlineMessage } from "../parser/notifications/stream.online";
 import { oberknechtEmitter } from "oberknecht-emitters";
 import { eventsubClientOptions } from "../types/eventsub.client.options";
 import { subscriptionType } from "../types/subscription.type";
+import { channelModerateMessagev2 } from "../parser/notifications/channel.moderate.v2";
 declare const onStreamOnlineCallback: (notification: streamOnlineMessage) => void;
+declare const onModactionCallback: (notification: channelModerateMessagev2) => void;
 declare const onErrorCallback: (e: Error) => void;
 export declare class oberknechtEventsub {
     #private;
@@ -23,11 +25,13 @@ export declare class oberknechtEventsub {
     closeWebsocket: (wsNum: number) => any;
     closeWebsockets: () => void;
     onStreamOnline(callback: typeof onStreamOnlineCallback): Promise<void>;
-    subscribe(type: subscriptionType, condition: any): Promise<import("oberknecht-api/lib-js/types/endpoints/eventsub").getEventsubSubscriptionsResponse>;
+    onModaction(callback: typeof onModactionCallback): Promise<void>;
+    subscribe(type: subscriptionType, condition: any, version?: string): Promise<import("oberknecht-api/lib-js/types/endpoints/eventsub").getEventsubSubscriptionsResponse>;
     unsubscribe(id: string): Promise<void>;
     unsubscribeAll(): Promise<void>;
     getSubscriptions(cacheOnly?: boolean, wsNum?: null): Promise<import("oberknecht-api/lib-js/types/endpoints/eventsub").getEventsubSubscriptionsResponse>;
     imitateMessage(message: Record<string, any>): Promise<void>;
     subscribeToStreamOnline(broadcasterLogins: string | string[] | undefined, broadcasterIDs?: string | string[], requestAll?: boolean): Promise<unknown>;
+    subscribeToModactions(broadcasterLogins: string | string[] | undefined, broadcasterIDs?: string | string[]): Promise<unknown>;
 }
 export {};

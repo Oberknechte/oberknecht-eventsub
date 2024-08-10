@@ -2,7 +2,7 @@ import { eventsubSubscriptionVersionType } from "oberknecht-api/lib-js/types/end
 export declare const streamOnlineCondition: {
     broadcaster_user_id: string;
 };
-export declare type subscriptionType = {
+export type subscriptionType = {
     id: string;
     type: string;
     version: string;
@@ -15,7 +15,12 @@ export declare type subscriptionType = {
     };
     created_at: string;
 };
-export declare type streamOnlineEvent = {
+export type subscriptionTransportType = {
+    method: "websocket" | "webhook";
+    session_id?: string;
+    callback?: string;
+};
+export type streamOnlineEvent = {
     id: string;
     broadcaster_user_id: string;
     broadcaster_user_login: string;
@@ -23,7 +28,7 @@ export declare type streamOnlineEvent = {
     type: string;
     started_at: string;
 };
-export declare type streamOnlineResponse = {
+export type streamOnlineResponse = {
     metadata: {
         message_id: string;
         message_type: "notification";

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createWs = void 0;
+exports.createWs = createWs;
 const __1 = require("..");
 const ws_1 = require("ws");
 const messageParser_1 = require("../parser/messageParser");
@@ -53,4 +53,3 @@ function createWs(sym) {
         });
     });
 }
-exports.createWs = createWs;

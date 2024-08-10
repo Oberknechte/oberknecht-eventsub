@@ -296,4 +296,10 @@ export const messageTypes = [
     "A user’s authorization has been revoked for your client id.",
   ],
   ["User Update", "user.update", "1", "A user has updated their account."],
+  [
+    "Channel Moderate V2",
+    "channel.moderate",
+    "2",
+    "A moderator performs a moderation action in a channel. Includes warnings.",
+  ],
 ] as const;

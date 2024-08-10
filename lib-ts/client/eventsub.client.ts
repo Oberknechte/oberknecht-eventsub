@@ -11,8 +11,10 @@ import { eventsubClientOptions } from "../types/eventsub.client.options";
 import { subscriptionType } from "../types/subscription.type";
 import { closeWebsockets } from "../functions/closeWebsockets";
 import { messageParser } from "../parser/messageParser";
+import { channelModerateMessagev2 } from "../parser/notifications/channel.moderate.v2";
 
 const onStreamOnlineCallback = (notification: streamOnlineMessage) => {};
+const onModactionCallback = (notification: channelModerateMessagev2) => {};
 const onErrorCallback = (e: Error) => {};
 let clientSymNum = 0;
 
@@ -102,8 +104,12 @@ export class oberknechtEventsub {
     this.OberknechtEmitter.on("notification:stream.online", callback);
   }
 
-  async subscribe(type: subscriptionType, condition: any) {
-    return subscribe(this.symbol, type, condition);
+  async onModaction(callback: typeof onModactionCallback) {
+    this.OberknechtEmitter.on("notification:channel.moderate", callback);
+  }
+
+  async subscribe(type: subscriptionType, condition: any, version?: string) {
+    return subscribe(this.symbol, type, condition, undefined, version);
   }
   async unsubscribe(id: string) {
     return unsubscribe(this.symbol, id);
@@ -153,6 +159,54 @@ export class oberknechtEventsub {
               .then((subscription) => {
                 return resolve2({
                   ...(broadcasterDatas[broadcasterID] ?? {}),
+                  subscription: subscription?.data?.[0],
+                });
+              })
+              .catch(reject2);
+          });
+        })
+      )
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  async subscribeToModactions(
+    broadcasterLogins: string | string[] | undefined,
+    broadcasterIDs?: string | string[]
+  ) {
+    return new Promise(async (resolve, reject) => {
+      let broadcasterLogins_ = convertToArray(broadcasterLogins);
+      let broadcasterIDs_ = convertToArray(broadcasterIDs);
+      if (broadcasterLogins_.length > 0)
+        await this.OberknechtAPI.getUsers(broadcasterLogins_)
+          .then((broadcasters) => {
+            broadcasterIDs_ = [
+              ...broadcasterIDs_,
+              ...Object.keys(broadcasters.ids),
+            ];
+          })
+          .catch((e) => {
+            return reject([Error("Could not get broadcasters", { cause: e })]);
+          });
+
+      if (!this.OberknechtAPI.verified) await this.OberknechtAPI.verify();
+
+      // console.log(this.OberknechtAPI.options);
+
+      Promise.all(
+        broadcasterIDs_.map((broadcasterID) => {
+          return new Promise((resolve2, reject2) => {
+            this.subscribe(
+              "channel.moderate",
+              {
+                broadcaster_user_id: broadcasterID,
+                moderator_user_id: this.OberknechtAPI.options.userid,
+              },
+              "2"
+            )
+              .then((subscription) => {
+                return resolve2({
                   subscription: subscription?.data?.[0],
                 });
               })

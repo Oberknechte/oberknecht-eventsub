@@ -1,6 +1,6 @@
 {
   "name": "oberknecht-eventsub",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "export",
   "scripts": {
@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/oberknechte/oberknecht-eventsub#readme",
   "dependencies": {
-    "oberknecht-api": "^1.2.9",
-    "oberknecht-emitters": "^1.0.8",
-    "oberknecht-utils": "^1.8.6",
+    "oberknecht-api": "^1.5.0",
+    "oberknecht-emitters": "^1.1.0",
+    "oberknecht-utils": "^1.9.3",
     "ws": "^8.13.0"
   },
   "devDependencies": {

@@ -13,7 +13,8 @@ export async function subscribe(
   sym: string,
   type: subscriptionType,
   condition: string,
-  transport?: object
+  transport?: object,
+  version?: string
 ) {
   return new Promise<getEventsubSubscriptionsResponse>(
     async (resolve, reject) => {
@@ -56,7 +57,7 @@ export async function subscribe(
       };
 
       await i.OberknechtAPI[sym]
-        .addEventsubSubscription(type, undefined, condition, transport_)
+        .addEventsubSubscription(type, version, condition, transport_)
         .then((subscription) => {
           i.eventsubClientData[sym].totalSubscriptions = subscription.total;
           i.eventsubClientData[sym].totalCost = subscription.total_cost;

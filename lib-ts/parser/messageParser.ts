@@ -32,9 +32,19 @@ export function messageParser(
     case "notification": {
       const notificationTypeRaw = response.metadata.subscription_type;
       const notificationType = notificationTypeRaw.replace(/\./g, "_");
+      const notificationTypeVersion =
+        notificationTypeRaw.replace(/\./g, "_") +
+        `_v${response.metadata.subscription_version}`;
       const notificationParsed =
-        messageTypes["notifications"][notificationType] &&
-        isConstructor(messageTypes["notifications"][notificationType])
+        messageTypes["notifications"][notificationTypeVersion] &&
+        isConstructor(messageTypes["notifications"][notificationTypeVersion])
+          ? new messageTypes["notifications"][notificationTypeVersion](
+              sym,
+              wsNum,
+              response
+            )
+          : messageTypes["notifications"][notificationType] &&
+            isConstructor(messageTypes["notifications"][notificationType])
           ? new messageTypes["notifications"][notificationType](
               sym,
               wsNum,

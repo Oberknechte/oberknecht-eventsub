@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unsubscribeAll = void 0;
+exports.unsubscribeAll = unsubscribeAll;
 const __1 = require("..");
 const closeWebsockets_1 = require("./closeWebsockets");
 const getSubscriptions_1 = require("./getSubscriptions");
@@ -30,5 +30,4 @@ function unsubscribeAll(sym) {
         });
     });
 }
-exports.unsubscribeAll = unsubscribeAll;
 ;

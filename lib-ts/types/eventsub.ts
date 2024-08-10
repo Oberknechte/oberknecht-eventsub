@@ -18,6 +18,12 @@ export type subscriptionType = {
   created_at: string;
 };
 
+export type subscriptionTransportType = {
+  method: "websocket" | "webhook";
+  session_id?: string;
+  callback?: string;
+};
+
 export type streamOnlineEvent = {
   id: string;
   broadcaster_user_id: string;
@@ -40,3 +46,4 @@ export type streamOnlineResponse = {
     event: streamOnlineEvent;
   };
 };
+
