@@ -15,9 +15,9 @@ export function unsubscribeAll(sym: string) {
                     })
                 }))
                     .then(() => {
-                        i.eventsubClientData[sym].subscriptions = [];
+                        i.eventsubClientData[sym].subscriptions = {};
                         Object.keys(i.websocketData[sym]).forEach(wsNum => {
-                            i.websocketData[sym][wsNum].subscriptions = [];
+                            i.websocketData[sym][wsNum].subscriptions = {};
                         });
 
                         closeWebsockets(sym)

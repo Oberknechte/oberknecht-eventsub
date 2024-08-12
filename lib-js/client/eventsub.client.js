@@ -14,6 +14,8 @@ const messageParser_1 = require("../parser/messageParser");
 const onStreamOnlineCallback = (notification) => { };
 const onModactionCallback = (notification) => { };
 const onErrorCallback = (e) => { };
+const onCloseCallback = (e) => { };
+const onResubscribeCallback = (e) => { };
 let clientSymNum = 0;
 class oberknechtEventsub {
     #symbol = `oberknechtEventsub-${clientSymNum++}`;
@@ -75,7 +77,13 @@ class oberknechtEventsub {
     on = this.OberknechtEmitter.on;
     once = this.OberknechtEmitter.once;
     onError = (callback) => {
-        return this.OberknechtEmitter.on("error", onErrorCallback);
+        return this.OberknechtEmitter.on("error", callback);
+    };
+    onClose = (callback) => {
+        return this.OberknechtEmitter.on("ws:close", callback);
+    };
+    onResubscribe = (callback) => {
+        return this.OberknechtEmitter.on("resubscribe", callback);
     };
     closeWebsocket = (wsNum) => {
         if (__1.i.websocketData[this.symbol]?.[wsNum])
@@ -167,7 +175,7 @@ class oberknechtEventsub {
                     }, "2")
                         .then((subscription) => {
                         return resolve2({
-                            subscription: subscription?.data?.[0],
+                            subscription: subscription
                         });
                     })
                         .catch(reject2);

@@ -9,8 +9,8 @@ export async function getSubscriptions(
   return new Promise<getEventsubSubscriptionsResponse>((resolve, reject) => {
     if (cachedOnly) {
       if (wsNum)
-        return resolve(i.websocketData[sym][wsNum]?.subscriptions ?? []);
-      return resolve(i.eventsubClientData[sym].subscriptions ?? []);
+        return resolve(i.websocketData[sym][wsNum]?.subscriptions ?? {});
+      return resolve(i.eventsubClientData[sym].subscriptions ?? {});
     }
 
     i.OberknechtAPI[sym]

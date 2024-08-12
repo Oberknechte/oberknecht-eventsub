@@ -7,6 +7,13 @@ import { channelModerateMessagev2 } from "../parser/notifications/channel.modera
 declare const onStreamOnlineCallback: (notification: streamOnlineMessage) => void;
 declare const onModactionCallback: (notification: channelModerateMessagev2) => void;
 declare const onErrorCallback: (e: Error) => void;
+declare const onCloseCallback: (e: Record<string, any>) => void;
+declare const onResubscribeCallback: (e: {
+    success: boolean;
+    resubscribeData?: Record<string, any>;
+    resubscribeArgs: Array<any>;
+    error?: Error;
+}) => void;
 export declare class oberknechtEventsub {
     #private;
     get symbol(): string;
@@ -22,6 +29,8 @@ export declare class oberknechtEventsub {
     on: (eventName: string | string[], callback: Function) => void;
     once: (eventName: string | string[], callback: Function) => void;
     onError: (callback: typeof onErrorCallback) => void;
+    onClose: (callback: typeof onCloseCallback) => void;
+    onResubscribe: (callback: typeof onResubscribeCallback) => void;
     closeWebsocket: (wsNum: number) => any;
     closeWebsockets: () => void;
     onStreamOnline(callback: typeof onStreamOnlineCallback): Promise<void>;

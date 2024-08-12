@@ -4,4 +4,7 @@ export type eventsubClientOptions = {
     withStreamInformation?: boolean;
     subscribeDelay?: number;
     oberknechtAPIOptions?: oberknechtAPIOptionsType;
+    autoReconnect?: boolean;
+    wsHeartbeatInterval?: number;
+    wsHeartbeatUntilReconnect?: number;
 };

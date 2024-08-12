@@ -1,6 +1,6 @@
 {
   "name": "oberknecht-eventsub",
-  "version": "1.0.4",
+  "version": "1.0.5s",
   "description": "",
   "main": "export",
   "scripts": {
@@ -21,10 +21,11 @@
     "oberknecht-api": "^1.5.0",
     "oberknecht-emitters": "^1.1.0",
     "oberknecht-utils": "^1.9.3",
-    "ws": "^8.13.0"
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
+    "@types/ws": "^8.5.12",
     "typescript": "^5.2.0-dev.20230606"
   }
 }

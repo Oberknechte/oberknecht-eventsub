@@ -49,11 +49,14 @@ async function subscribe(sym, type, condition, transport, version) {
             let subscriptionParsed = {
                 ...subscription.data[0],
                 wsNum: wsNum,
+                wsArgs: [type, condition, transport, version],
             };
             if (!__1.i.eventsubClientData[sym].subscriptions)
-                __1.i.eventsubClientData[sym].subscriptions = [];
-            __1.i.eventsubClientData[sym].subscriptions.push(subscriptionParsed);
-            wsData.subscriptions.push(subscriptionParsed);
+                __1.i.eventsubClientData[sym].subscriptions = {};
+            __1.i.eventsubClientData[sym].subscriptions[subscription.data[0].id] = subscriptionParsed;
+            if (!wsData.subscriptions)
+                wsData.subscriptions = {};
+            wsData.subscriptions[subscription.data[0].id] = subscriptionParsed;
             return resolve(subscription);
         })
             .catch((e) => {

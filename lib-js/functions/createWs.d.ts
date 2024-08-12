@@ -1,1 +1,1 @@
-export declare function createWs(sym: any): Promise<number>;
+export declare function createWs(sym: string, oldWsNum?: number): Promise<number>;

@@ -17,9 +17,9 @@ function unsubscribeAll(sym) {
                 });
             }))
                 .then(() => {
-                __1.i.eventsubClientData[sym].subscriptions = [];
+                __1.i.eventsubClientData[sym].subscriptions = {};
                 Object.keys(__1.i.websocketData[sym]).forEach(wsNum => {
-                    __1.i.websocketData[sym][wsNum].subscriptions = [];
+                    __1.i.websocketData[sym][wsNum].subscriptions = {};
                 });
                 (0, closeWebsockets_1.closeWebsockets)(sym);
                 resolve();

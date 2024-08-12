@@ -16,6 +16,13 @@ import { channelModerateMessagev2 } from "../parser/notifications/channel.modera
 const onStreamOnlineCallback = (notification: streamOnlineMessage) => {};
 const onModactionCallback = (notification: channelModerateMessagev2) => {};
 const onErrorCallback = (e: Error) => {};
+const onCloseCallback = (e: Record<string, any>) => {};
+const onResubscribeCallback = (e: {
+  success: boolean;
+  resubscribeData?: Record<string, any>;
+  resubscribeArgs: Array<any>;
+  error?: Error;
+}) => {};
 let clientSymNum = 0;
 
 export class oberknechtEventsub {
@@ -87,7 +94,14 @@ export class oberknechtEventsub {
   on = this.OberknechtEmitter.on;
   once = this.OberknechtEmitter.once;
   onError = (callback: typeof onErrorCallback) => {
-    return this.OberknechtEmitter.on("error", onErrorCallback);
+    return this.OberknechtEmitter.on("error", callback);
+  };
+  onClose = (callback: typeof onCloseCallback) => {
+    return this.OberknechtEmitter.on("ws:close", callback);
+  };
+
+  onResubscribe = (callback: typeof onResubscribeCallback) => {
+    return this.OberknechtEmitter.on("resubscribe", callback);
   };
 
   closeWebsocket = (wsNum: number) => {
@@ -207,7 +221,7 @@ export class oberknechtEventsub {
             )
               .then((subscription) => {
                 return resolve2({
-                  subscription: subscription?.data?.[0],
+                  subscription: subscription
                 });
               })
               .catch(reject2);

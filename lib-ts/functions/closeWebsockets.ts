@@ -6,5 +6,5 @@ export function closeWebsockets(sym: string) {
     closeWebsocket(sym, parseInt(wsnum));
   });
 
-  i.eventsubClientData[sym].subscriptions = [];
+  i.eventsubClientData[sym].subscriptions = {};
 }

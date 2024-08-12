@@ -64,13 +64,17 @@ export async function subscribe(
           let subscriptionParsed = {
             ...subscription.data[0],
             wsNum: wsNum,
+            wsArgs: [type, condition, transport, version],
           };
 
           if (!i.eventsubClientData[sym].subscriptions)
-            i.eventsubClientData[sym].subscriptions = [];
-          i.eventsubClientData[sym].subscriptions.push(subscriptionParsed);
+            i.eventsubClientData[sym].subscriptions = {};
+          i.eventsubClientData[sym].subscriptions[
+            subscription.data[0].id
+          ] = subscriptionParsed;
 
-          wsData.subscriptions.push(subscriptionParsed);
+          if (!wsData.subscriptions) wsData.subscriptions = {};
+          wsData.subscriptions[subscription.data[0].id] = subscriptionParsed;
 
           return resolve(subscription);
         })
