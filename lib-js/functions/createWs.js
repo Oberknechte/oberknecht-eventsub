@@ -68,6 +68,8 @@ function createWs(sym, oldWsNum, oldWSError) {
         __1.i.websocketData[sym][wsNum].pendingPings = 0;
     });
     ws.on("ping", () => {
+        if (ws.readyState !== 1)
+            return;
         ws.pong();
         __1.i.websocketData[sym][wsNum].lastAlive = Date.now();
         __1.i.websocketData[sym][wsNum].pendingPings = 0;

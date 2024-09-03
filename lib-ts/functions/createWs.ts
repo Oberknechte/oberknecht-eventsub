@@ -80,6 +80,7 @@ export function createWs(sym: string, oldWsNum?: number, oldWSError?: any) {
   });
 
   ws.on("ping", () => {
+    if(ws.readyState !== 1) return;
     ws.pong();
 
     i.websocketData[sym][wsNum].lastAlive = Date.now();
