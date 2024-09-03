@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createWs = createWs;
+exports.createWs = void 0;
 const __1 = require("..");
 const ws_1 = require("ws");
 const messageParser_1 = require("../parser/messageParser");
 const subscribe_1 = require("./subscribe");
-function createWs(sym, oldWsNum) {
+function createWs(sym, oldWsNum, oldWSError) {
     let clientData = __1.i.eventsubClientData[sym];
     const wsNum = clientData.wsNum;
     clientData.wsNum++;
@@ -39,7 +39,10 @@ function createWs(sym, oldWsNum) {
         if (code === 1000 || !__1.i.eventsubClientData[sym]._options.autoReconnect)
             return;
         setTimeout(() => {
-            createWs(sym, useRecreateWSNum).catch((e) => {
+            createWs(sym, useRecreateWSNum, {
+                code: code,
+                reason: reason,
+            }).catch((e) => {
                 OberknechtEmitter.emitError(["error", "ws:error", `ws:${wsNum}:error`], {
                     error: e,
                     wsNum: wsNum,
@@ -64,13 +67,23 @@ function createWs(sym, oldWsNum) {
         __1.i.websocketData[sym][wsNum].lastAlive = Date.now();
         __1.i.websocketData[sym][wsNum].pendingPings = 0;
     });
+    ws.on("ping", () => {
+        ws.pong();
+        __1.i.websocketData[sym][wsNum].lastAlive = Date.now();
+        __1.i.websocketData[sym][wsNum].pendingPings = 0;
+    });
+    ws.on("pong", () => {
+        __1.i.websocketData[sym][wsNum].lastAlive = Date.now();
+        __1.i.websocketData[sym][wsNum].pendingPings = 0;
+    });
     function heartbeat() {
         if (__1.i.websocketData[sym][wsNum].pendingPings >
             __1.i.eventsubClientData[sym]?._options?.wsHeartbeatUntilReconnect ??
             2) {
-            ws.close();
+            ws.close(1012);
             return;
         }
+        ws.ping();
         __1.i.websocketData[sym][wsNum].pendingPings++;
     }
     __1.i.websocketData[sym][wsNum].heartbeatInterval = setInterval(heartbeat, __1.i.eventsubClientData[sym]?._options?.wsHeartbeatInterval ?? 5000);
@@ -94,6 +107,7 @@ function createWs(sym, oldWsNum) {
                             success: true,
                             resubscribeData: r,
                             resubscribeArgs: wsArgs,
+                            oldWSError: oldWSError,
                         });
                     })
                         .catch((e) => {
@@ -106,6 +120,7 @@ function createWs(sym, oldWsNum) {
                             success: false,
                             error: e,
                             resubscribeArgs: wsArgs,
+                            oldWSError: oldWSError,
                         });
                     });
                 });
@@ -117,3 +132,4 @@ function createWs(sym, oldWsNum) {
         });
     });
 }
+exports.createWs = createWs;

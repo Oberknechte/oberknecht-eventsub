@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.closeWebsocket = closeWebsocket;
+exports.closeWebsocket = void 0;
 const __1 = require("..");
 function closeWebsocket(sym, wsnum) {
     try {
@@ -14,3 +14,4 @@ function closeWebsocket(sym, wsnum) {
     catch (e) { }
     return;
 }
+exports.closeWebsocket = closeWebsocket;

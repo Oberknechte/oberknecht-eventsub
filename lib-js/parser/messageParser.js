@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.messageParser = messageParser;
+exports.messageParser = void 0;
 const oberknecht_utils_1 = require("oberknecht-utils");
 const __1 = require("..");
 const message_Types_1 = require("./message.Types");
@@ -38,3 +38,4 @@ function messageParser(sym, response, wsNum) {
         }
     }
 }
+exports.messageParser = messageParser;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFreeWsNum = getFreeWsNum;
+exports.getFreeWsNum = void 0;
 const __1 = require("..");
 function getFreeWsNum(sym) {
     // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState
@@ -14,3 +14,4 @@ function getFreeWsNum(sym) {
         ?.filter((a) => a[2] < 100)?.[0]?.[0];
     return wsNum_ !== undefined ? parseInt(wsNum_) : undefined;
 }
+exports.getFreeWsNum = getFreeWsNum;

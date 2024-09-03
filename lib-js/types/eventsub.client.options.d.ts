@@ -1,5 +1,5 @@
 import { oberknechtAPIOptionsType } from "oberknecht-api/lib-ts/types/oberknechtAPIOptions";
-export type eventsubClientOptions = {
+export declare type eventsubClientOptions = {
     token: string;
     withStreamInformation?: boolean;
     subscribeDelay?: number;

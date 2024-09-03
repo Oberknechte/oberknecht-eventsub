@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSubscriptions = getSubscriptions;
+exports.getSubscriptions = void 0;
 const __1 = require("..");
 async function getSubscriptions(sym, cachedOnly, wsNum) {
     return new Promise((resolve, reject) => {
@@ -17,3 +17,4 @@ async function getSubscriptions(sym, cachedOnly, wsNum) {
         });
     });
 }
+exports.getSubscriptions = getSubscriptions;

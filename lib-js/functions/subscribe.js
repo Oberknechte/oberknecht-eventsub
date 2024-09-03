@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.subscribe = subscribe;
+exports.subscribe = void 0;
 const __1 = require("..");
 const createWs_1 = require("./createWs");
 const getFreeWsNum_1 = require("./getFreeWsNum");
@@ -65,3 +65,4 @@ async function subscribe(sym, type, condition, transport, version) {
         });
     });
 }
+exports.subscribe = subscribe;

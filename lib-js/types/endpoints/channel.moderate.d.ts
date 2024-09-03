@@ -1,11 +1,11 @@
 import { subscriptionTransportType } from "../eventsub";
 declare const channelModerateActionTypes: readonly ["ban", "timeout", "unban", "untimeout", "clear", "emoteonly", "emoteonlyoff", "followers", "followersoff", "uniquechat", "uniquechatoff", "slow", "slowoff", "subscribers", "subscribersoff", "unraid", "delete", "unvip", "vip", "raid", "add_blocked_term", "add_permitted_term", "remove_blocked_term", "remove_permitted_term", "mod", "unmod", "approve_unban_request", "deny_unban_request", "warn"];
-type channelModerateActionUserType = {
+declare type channelModerateActionUserType = {
     user_id: string;
     user_login: string;
     user_name: string;
 };
-export type channelModerateResponse = {
+export declare type channelModerateResponse = {
     metadata: {
         message_id: string;
         message_type: "notification";
@@ -29,7 +29,7 @@ export type channelModerateResponse = {
         event: channelModerateEvent;
     };
 };
-export type channelModerateEvent = {
+export declare type channelModerateEvent = {
     broadcaster_user_id: string;
     broadcaster_user_login: string;
     broadcaster_user_name: string;

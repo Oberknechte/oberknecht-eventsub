@@ -3,7 +3,7 @@ import { WebSocket } from "ws";
 import { messageParser } from "../parser/messageParser";
 import { subscribe } from "./subscribe";
 
-export function createWs(sym: string, oldWsNum?: number) {
+export function createWs(sym: string, oldWsNum?: number, oldWSError?: any) {
   let clientData = i.eventsubClientData[sym];
   const wsNum = clientData.wsNum;
   clientData.wsNum++;
@@ -44,7 +44,10 @@ export function createWs(sym: string, oldWsNum?: number) {
       return;
 
     setTimeout(() => {
-      createWs(sym, useRecreateWSNum).catch((e) => {
+      createWs(sym, useRecreateWSNum, {
+        code: code,
+        reason: reason,
+      }).catch((e) => {
         OberknechtEmitter.emitError(
           ["error", "ws:error", `ws:${wsNum}:error`],
           {
@@ -76,15 +79,29 @@ export function createWs(sym: string, oldWsNum?: number) {
     i.websocketData[sym][wsNum].pendingPings = 0;
   });
 
+  ws.on("ping", () => {
+    ws.pong();
+
+    i.websocketData[sym][wsNum].lastAlive = Date.now();
+    i.websocketData[sym][wsNum].pendingPings = 0;
+  });
+
+  ws.on("pong", () => {
+    i.websocketData[sym][wsNum].lastAlive = Date.now();
+    i.websocketData[sym][wsNum].pendingPings = 0;
+  });
+
   function heartbeat() {
     if (
       i.websocketData[sym][wsNum].pendingPings >
         i.eventsubClientData[sym]?._options?.wsHeartbeatUntilReconnect ??
       2
     ) {
-      ws.close();
+      ws.close(1012);
       return;
     }
+
+    ws.ping();
 
     i.websocketData[sym][wsNum].pendingPings++;
   }
@@ -120,6 +137,7 @@ export function createWs(sym: string, oldWsNum?: number) {
                     success: true,
                     resubscribeData: r,
                     resubscribeArgs: wsArgs,
+                    oldWSError: oldWSError,
                   }
                 );
               })
@@ -135,6 +153,7 @@ export function createWs(sym: string, oldWsNum?: number) {
                     success: false,
                     error: e,
                     resubscribeArgs: wsArgs,
+                    oldWSError: oldWSError,
                   }
                 );
               });

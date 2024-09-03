@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unsubscribe = unsubscribe;
+exports.unsubscribe = void 0;
 const __1 = require("..");
 function unsubscribe(sym, id) {
     return new Promise((resolve, reject) => {
@@ -20,3 +20,4 @@ function unsubscribe(sym, id) {
         });
     });
 }
+exports.unsubscribe = unsubscribe;

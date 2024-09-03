@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.closeWebsockets = closeWebsockets;
+exports.closeWebsockets = void 0;
 const __1 = require("..");
 const closeWebsocket_1 = require("./closeWebsocket");
 function closeWebsockets(sym) {
@@ -9,3 +9,4 @@ function closeWebsockets(sym) {
     });
     __1.i.eventsubClientData[sym].subscriptions = {};
 }
+exports.closeWebsockets = closeWebsockets;
