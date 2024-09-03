@@ -16,7 +16,8 @@ function createWs(sym, oldWsNum, oldWSError) {
     let oldWSData = __1.i.websocketData[sym]?.[oldWsNum];
     let useRecreateWSNum = oldWsNum ?? wsNum;
     let OberknechtEmitter = __1.i.OberknechtEmitter[sym];
-    let ws = (__1.i.WebSockets[sym][wsNum] = new ws_1.WebSocket(clientData.wsUrl));
+    let ws = new ws_1.WebSocket(clientData.wsUrl);
+    // let ws = (i.WebSockets[sym][wsNum] = new WebSocket(clientData.wsUrl));
     __1.i.websocketData[sym][wsNum] = {
         get readyState() {
             return ws.readyState;
@@ -85,7 +86,9 @@ function createWs(sym, oldWsNum, oldWSError) {
             ws.close(1012);
             return;
         }
-        ws.ping();
+        if (ws.readyState === 1)
+            ws.ping();
+        ;
         __1.i.websocketData[sym][wsNum].pendingPings++;
     }
     __1.i.websocketData[sym][wsNum].heartbeatInterval = setInterval(heartbeat, __1.i.eventsubClientData[sym]?._options?.wsHeartbeatInterval ?? 5000);

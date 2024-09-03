@@ -16,7 +16,8 @@ export function createWs(sym: string, oldWsNum?: number, oldWSError?: any) {
 
   let OberknechtEmitter = i.OberknechtEmitter[sym];
 
-  let ws = (i.WebSockets[sym][wsNum] = new WebSocket(clientData.wsUrl));
+  let ws = new WebSocket(clientData.wsUrl);
+  // let ws = (i.WebSockets[sym][wsNum] = new WebSocket(clientData.wsUrl));
   i.websocketData[sym][wsNum] = {
     get readyState() {
       return ws.readyState;
@@ -102,7 +103,7 @@ export function createWs(sym: string, oldWsNum?: number, oldWSError?: any) {
       return;
     }
 
-    ws.ping();
+    if(ws.readyState === 1) ws.ping();;
 
     i.websocketData[sym][wsNum].pendingPings++;
   }
